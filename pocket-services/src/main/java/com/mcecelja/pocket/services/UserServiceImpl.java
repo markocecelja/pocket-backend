@@ -1,8 +1,12 @@
 package com.mcecelja.pocket.services;
 
+import com.mcecelja.pocket.common.dto.user.UserDTO;
+import com.mcecelja.pocket.common.mappers.UserMapper;
+import com.mcecelja.pocket.context.AuthorizedRequestContext;
 import com.mcecelja.pocket.domain.user.User;
 import com.mcecelja.pocket.domain.user.UserLogin;
 import com.mcecelja.pocket.repositories.user.UserLoginRepository;
+import com.mcecelja.pocket.repositories.user.UserRepository;
 import com.mcecelja.pocket.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +22,10 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
 	private final UserLoginRepository userLoginRepository;
+
+	private final UserRepository userRepository;
+
+	private final UserMapper userMapper;
 
 	@Override
 	public UserDetails findUserDetailsByUserId(Long userId) {
@@ -40,5 +48,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		}
 
 		return userLogin.getUser();
+	}
+
+	@Override
+	public UserDTO getCurrentUserInfo() {
+		User user = userRepository.findUserById(AuthorizedRequestContext.getCurrentUser().getId()).orElse(null);
+
+		return userMapper.userToUserDTO(user);
 	}
 }
