@@ -5,7 +5,9 @@ public enum PocketError {
 	SESSION_EXPIRED("Session expired!"),
 	JSON_PARSE_ERROR("Error while parsing JSON!"),
 	BAD_REQUEST("Bad request!"),
-	BAD_CREDENTIALS("Bad credentials");
+	BAD_CREDENTIALS("Bad credentials"),
+	UNAUTHORIZED("Unauthorized request!"),
+	NON_EXISTING_ORGANIZATION("Organization with provided id doesn't exist");
 
 	private final String desc;
 

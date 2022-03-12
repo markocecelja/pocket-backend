@@ -1,4 +1,4 @@
-package com.mcecelja.pocket.domain.user;
+package com.mcecelja.pocket.domain.organization;
 
 import com.mcecelja.pocket.domain.AbstractBaseEntity;
 import lombok.AllArgsConstructor;
@@ -10,30 +10,30 @@ import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserLogin extends AbstractBaseEntity implements Serializable {
+public class OrganizationCode extends AbstractBaseEntity {
 
 	@Id
-	@GeneratedValue(generator = "user_login_sequence", strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(generator = "organization_code_sequence", strategy = GenerationType.SEQUENCE)
 	@GenericGenerator(
-			name = "user_login_sequence",
+			name = "organization_code_sequence",
 			strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
 			parameters = {
-					@Parameter(name = "sequence_name", value = "user_login_id_seq"),
+					@Parameter(name = "sequence_name", value = "organization_code_id_seq"),
 			}
 	)
 	private Long id;
 
-	private String username;
+	private String value;
 
-	private String password;
+	private LocalDateTime expirationDate;
 
 	@OneToOne
-	private User user;
+	private Organization organization;
 }

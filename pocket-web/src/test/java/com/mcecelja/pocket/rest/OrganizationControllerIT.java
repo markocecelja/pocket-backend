@@ -1,0 +1,178 @@
+package com.mcecelja.pocket.rest;
+
+import com.mcecelja.pocket.PocketContextAwareIT;
+import com.mcecelja.pocket.common.dto.organization.OrganizationDTO;
+import com.mcecelja.pocket.common.exceptions.PocketError;
+import com.mcecelja.pocket.common.exceptions.PocketException;
+import com.mcecelja.pocket.utils.ResponseMessage;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class OrganizationControllerIT extends PocketContextAwareIT {
+
+	@Test
+	public void getOrganization() throws PocketException {
+
+		authenticateUser("ikovac", "ikovac");
+
+		HttpEntity<String> entity = new HttpEntity<>(null, headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/api/organizations/1"),
+				HttpMethod.GET, entity, String.class);
+
+		OrganizationDTO result = getDTOObjectFromBody(response, OrganizationDTO.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals("1", result.getId());
+		assertEquals("Testna organizacija", result.getName());
+		assertEquals("Opis testne organizacije", result.getDescription());
+		assertTrue(result.isActive());
+		assertNotNull(result.getOrganizationCode());
+		assertEquals("1", result.getOrganizationCode().getId());
+		assertEquals("A18rT56PO9", result.getOrganizationCode().getValue());
+	}
+
+	@Test
+	public void getOrganizationNonExistingOrganization() {
+
+		authenticateUser("ikovac", "ikovac");
+
+		HttpEntity<String> entity = new HttpEntity<>(null, headers);
+
+		ResponseEntity<ResponseMessage> response = restTemplate.exchange(
+				createURLWithPort("/api/organizations/0"),
+				HttpMethod.GET, entity, ResponseMessage.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(PocketError.NON_EXISTING_ORGANIZATION.toString(), response.getBody().getErrorCode());
+	}
+
+	@Test
+	@DirtiesContext
+	public void createOrganization() throws PocketException {
+
+		authenticateUser("ikovac", "ikovac");
+
+		OrganizationDTO organizationDTO = OrganizationDTO.builder().name("Nova organizacija").description("Opis nove organizacije").build();
+
+		HttpEntity<OrganizationDTO> entity = new HttpEntity<>(organizationDTO, headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/api/organizations"),
+				HttpMethod.POST, entity, String.class);
+
+		OrganizationDTO result = getDTOObjectFromBody(response, OrganizationDTO.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals("2", result.getId());
+		assertEquals("Nova organizacija", result.getName());
+		assertEquals("Opis nove organizacije", result.getDescription());
+		assertTrue(result.isActive());
+		assertNotNull(result.getOrganizationCode());
+		assertEquals("2", result.getOrganizationCode().getId());
+	}
+
+	@Test
+	public void createOrganizationUnauthorized() {
+
+		authenticateUser("adukic", "adukic");
+
+		OrganizationDTO organizationDTO = OrganizationDTO.builder().name("Nova organizacija").description("Opis nove organizacije").build();
+
+		HttpEntity<OrganizationDTO> entity = new HttpEntity<>(organizationDTO, headers);
+
+		ResponseEntity<ResponseMessage> response = restTemplate.exchange(
+				createURLWithPort("/api/organizations"),
+				HttpMethod.POST, entity, ResponseMessage.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(PocketError.UNAUTHORIZED.toString(), response.getBody().getErrorCode());
+	}
+
+	@Test
+	@DirtiesContext
+	public void updateOrganizationSystemAdmin() throws PocketException {
+
+		authenticateUser("ikovac", "ikovac");
+
+		OrganizationDTO organizationDTO = OrganizationDTO.builder().name("Ažurirana organizacija").description("Opis ažurirane organizacije").active(false).build();
+
+		HttpEntity<OrganizationDTO> entity = new HttpEntity<>(organizationDTO, headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/api/organizations/1"),
+				HttpMethod.PUT, entity, String.class);
+
+		OrganizationDTO result = getDTOObjectFromBody(response, OrganizationDTO.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals("1", result.getId());
+		assertEquals("Ažurirana organizacija", result.getName());
+		assertEquals("Opis ažurirane organizacije", result.getDescription());
+		assertFalse(organizationDTO.isActive());
+	}
+
+	@Test
+	@DirtiesContext
+	public void updateOrganizationOrganizationAdmin() throws PocketException {
+
+		authenticateUser("ffranjic", "ffranjic");
+
+		OrganizationDTO organizationDTO = OrganizationDTO.builder().name("Ažurirana organizacija").description("Opis ažurirane organizacije").active(false).build();
+
+		HttpEntity<OrganizationDTO> entity = new HttpEntity<>(organizationDTO, headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/api/organizations/1"),
+				HttpMethod.PUT, entity, String.class);
+
+		OrganizationDTO result = getDTOObjectFromBody(response, OrganizationDTO.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals("1", result.getId());
+		assertEquals("Ažurirana organizacija", result.getName());
+		assertEquals("Opis ažurirane organizacije", result.getDescription());
+		assertTrue(result.isActive());
+	}
+
+	@Test
+	public void updateOrganizationNonExistingOrganization() {
+
+		authenticateUser("ikovac", "ikovac");
+
+		OrganizationDTO organizationDTO = OrganizationDTO.builder().name("Ažurirana organizacija").description("Opis ažurirane organizacije").active(false).build();
+
+		HttpEntity<OrganizationDTO> entity = new HttpEntity<>(organizationDTO, headers);
+
+		ResponseEntity<ResponseMessage> response = restTemplate.exchange(
+				createURLWithPort("/api/organizations/0"),
+				HttpMethod.PUT, entity, ResponseMessage.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(PocketError.NON_EXISTING_ORGANIZATION.toString(), response.getBody().getErrorCode());
+	}
+
+	@Test
+	public void updateOrganizationUnauthorized() {
+
+		authenticateUser("adukic", "adukic");
+
+		OrganizationDTO organizationDTO = OrganizationDTO.builder().name("Ažurirana organizacija").description("Opis ažurirane organizacije").active(false).build();
+
+		HttpEntity<OrganizationDTO> entity = new HttpEntity<>(organizationDTO, headers);
+
+		ResponseEntity<ResponseMessage> response = restTemplate.exchange(
+				createURLWithPort("/api/organizations/1"),
+				HttpMethod.PUT, entity, ResponseMessage.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(PocketError.UNAUTHORIZED.toString(), response.getBody().getErrorCode());
+	}
+}

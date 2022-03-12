@@ -6,8 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -20,8 +26,19 @@ import java.util.Set;
 public class User extends AbstractBaseEntity implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "user_sequence", strategy = GenerationType.SEQUENCE)
+	@GenericGenerator(
+			name = "user_sequence",
+			strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+			parameters = {
+					@Parameter(name = "sequence_name", value = "users_id_seq"),
+			}
+	)
 	private Long id;
+
+	private String firstName;
+
+	private String lastName;
 
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(
