@@ -2,6 +2,7 @@ package com.mcecelja.pocket.rest;
 
 import com.mcecelja.pocket.PocketContextAwareIT;
 import com.mcecelja.pocket.common.dto.organization.OrganizationDTO;
+import com.mcecelja.pocket.common.dto.organization.OrganizationMemberDTO;
 import com.mcecelja.pocket.common.exceptions.PocketError;
 import com.mcecelja.pocket.common.exceptions.PocketException;
 import com.mcecelja.pocket.utils.ResponseMessage;
@@ -12,9 +13,28 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class OrganizationControllerIT extends PocketContextAwareIT {
+
+	@Test
+	public void getOrganizations() throws PocketException {
+
+		authenticateUser("ikovac", "ikovac");
+
+		HttpEntity<String> entity = new HttpEntity<>(null, headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/api/organizations"),
+				HttpMethod.GET, entity, String.class);
+
+		List<OrganizationDTO> result = getListFromBody(response, OrganizationDTO.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(2, result.size());
+	}
 
 	@Test
 	public void getOrganization() throws PocketException {
@@ -174,5 +194,22 @@ public class OrganizationControllerIT extends PocketContextAwareIT {
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals(PocketError.UNAUTHORIZED.toString(), response.getBody().getErrorCode());
+	}
+
+	@Test
+	public void getOrganizationMembers() throws PocketException {
+
+		authenticateUser("ikovac", "ikovac");
+
+		HttpEntity<String> entity = new HttpEntity<>(null, headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/api/organizations/1/members"),
+				HttpMethod.GET, entity, String.class);
+
+		List<OrganizationMemberDTO> result = getListFromBody(response, OrganizationMemberDTO.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(2, result.size());
 	}
 }

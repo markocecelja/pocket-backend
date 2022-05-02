@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,6 +31,11 @@ public class OrganizationManagerImpl implements OrganizationManager {
 	private final OrganizationCodeRepository organizationCodeRepository;
 
 	private final PermissionCheckerService permissionCheckerService;
+
+	@Override
+	public Page<Organization> getOrganizations(Pageable pageable) {
+		return organizationRepository.findAll(pageable);
+	}
 
 	@Override
 	public Organization getOrganization(Long id) throws PocketException {

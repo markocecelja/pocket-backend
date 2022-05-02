@@ -87,8 +87,7 @@ public abstract class PocketContextAwareIT {
 	protected <T> List<T> getListFromBody(ResponseEntity<String> response, Class<T> dTOClass) throws PocketException {
 		JsonNode tree = JsonSimpleHelper.turnIntoJsonTree(response.getBody());
 
-		JsonNode content = tree.get("payload");
-
+		JsonNode content = tree.get("payload").get("content");
 
 		List<T> resultList = new ArrayList<>();
 		for (int i = 0; i < content.size(); i++) {

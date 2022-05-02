@@ -26,7 +26,8 @@ VALUES (1, 1),
        (3, 2);
 
 INSERT INTO organization(id, name, description, active, created_date_time, updated_date_time)
-VALUES (NEXTVAL('organization_id_seq'), 'Testna organizacija', 'Opis testne organizacije', true, now(), now());
+VALUES (NEXTVAL('organization_id_seq'), 'Testna organizacija', 'Opis testne organizacije', true, now(), now()),
+       (NEXTVAL('organization_id_seq'), 'Neaktivna organizacija', 'Opis neaktivne organizacije', false, now(), now());
 
 INSERT INTO organization_code(id, value, expiration_date, organization_id, created_date_time, updated_date_time)
 VALUES (NEXTVAL('organization_code_id_seq'), 'A18rT56PO9', DATEADD(DD, 30, now()), 1, now(), now());
