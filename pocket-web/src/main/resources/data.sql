@@ -7,6 +7,13 @@ INSERT INTO organization_role (name, created_date_time, updated_date_time)
 VALUES ('ADMIN', now(), now()),
        ('MEMBER', now(), now());
 
+INSERT INTO category (active, name, created_date_time, updated_date_time)
+VALUES (true, 'Kultura', now(), now()),
+       (true, 'Sport', now(), now()),
+       (true, 'Hrana', now(), now()),
+       (true, 'Zabava', now(), now()),
+       (false, 'Neaktivna kategorija', now(), now());
+
 INSERT INTO users (id, first_name, last_name, created_date_time, updated_date_time)
 VALUES (NEXTVAL('users_id_seq'), 'Ivan', 'Kovač', now(), now()),
        (NEXTVAL('users_id_seq'), 'Filip', 'Franjić', now(), now()),
@@ -35,3 +42,6 @@ VALUES (NEXTVAL('organization_code_id_seq'), 'A18rT56PO9', DATEADD(DD, 30, now()
 INSERT INTO organization_member(organization_id, user_id, organization_role_id)
 VALUES (1, 2, 1),
        (1, 3, 2);
+
+INSERT INTO offer(id, title, description, category_id, organization_id, created_date_time, updated_date_time)
+VALUES (NEXTVAL('offer_id_seq'), 'Super ponuda', 'Iskoristite kod 489766dad5 za ostvaranje popusta na hranu!', 3, 1, now(), now());

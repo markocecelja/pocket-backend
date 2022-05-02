@@ -27,7 +27,7 @@ public class OrganizationController {
 	private final OrganizationMemberService organizationMemberService;
 
 	@GetMapping("")
-	public ResponseEntity<ResponseMessage<Page<OrganizationDTO>>> getOrganization(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+	public ResponseEntity<ResponseMessage<Page<OrganizationDTO>>> getOrganizations(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
 		return ResponseEntity.ok(new ResponseMessage<>(organizationService.getOrganizations(pageable)));
 	}
 
