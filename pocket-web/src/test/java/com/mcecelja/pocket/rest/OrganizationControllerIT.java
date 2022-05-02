@@ -91,7 +91,7 @@ public class OrganizationControllerIT extends PocketContextAwareIT {
 		OrganizationDTO result = getDTOObjectFromBody(response, OrganizationDTO.class);
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		assertEquals("2", result.getId());
+		assertEquals("3", result.getId());
 		assertEquals("Nova organizacija", result.getName());
 		assertEquals("Opis nove organizacije", result.getDescription());
 		assertTrue(result.isActive());
