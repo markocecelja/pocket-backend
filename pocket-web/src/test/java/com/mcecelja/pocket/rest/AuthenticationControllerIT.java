@@ -24,7 +24,7 @@ public class AuthenticationControllerIT extends PocketContextAwareIT {
 		HttpEntity<LoginRequestDTO> entity = new HttpEntity<>(body, headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(
-				createURLWithPort("/api/authentication/login"),
+				createURLWithPort("/api/public/authentication/login"),
 				HttpMethod.POST, entity, String.class);
 
 		LoginResponseDTO loginResponseDTO = getDTOObjectFromBody(response, LoginResponseDTO.class);
@@ -40,7 +40,7 @@ public class AuthenticationControllerIT extends PocketContextAwareIT {
 		HttpEntity<LoginRequestDTO> entity = new HttpEntity<>(body, headers);
 
 		ResponseEntity<ResponseMessage> response = restTemplate.exchange(
-				createURLWithPort("/api/authentication/login"),
+				createURLWithPort("/api/public/authentication/login"),
 				HttpMethod.POST,
 				entity,
 				ResponseMessage.class);
