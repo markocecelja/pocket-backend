@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final String[] publicEndpoints = {
 			"/h2-console/**",
-			"/api/authentication/**"
+			"/api/public/**"
 	};
 
 	@Resource(name = "userService")

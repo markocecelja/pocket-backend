@@ -17,7 +17,8 @@ VALUES (true, 'Kultura', now(), now()),
 INSERT INTO users (id, first_name, last_name, created_date_time, updated_date_time)
 VALUES (NEXTVAL('users_id_seq'), 'Ivan', 'Kovač', now(), now()),
        (NEXTVAL('users_id_seq'), 'Filip', 'Franjić', now(), now()),
-       (NEXTVAL('users_id_seq'), 'Ana', 'Đukić', now(), now());
+       (NEXTVAL('users_id_seq'), 'Ana', 'Đukić', now(), now()),
+       (NEXTVAL('users_id_seq'), 'Pero', 'Perić', now(), now());
 
 INSERT INTO user_login (id, username, password, user_id, created_date_time, updated_date_time)
 VALUES (NEXTVAL('user_login_id_seq'), 'ikovac', '$2a$12$JB8fZ4Kojd6/H2U.SS9mq.1fjg3i3dgmmURGCH0Huw0LnO06P/fb2', 1,
@@ -25,6 +26,8 @@ VALUES (NEXTVAL('user_login_id_seq'), 'ikovac', '$2a$12$JB8fZ4Kojd6/H2U.SS9mq.1f
        (NEXTVAL('user_login_id_seq'), 'ffranjic', '$2a$12$z6kEhBBMjjSfS.Ld8ernYuAtU1Y2ChvKJ34swnD1sXzCBBEcTmxmK', 2,
         now(), now()),
        (NEXTVAL('user_login_id_seq'), 'adukic', '$2a$12$ZBQ3CxyZ8H9i9DVpeHTKBuBb7hZEHTkYOnpnZ0UZdaEUcWDlDeb.e', 3,
+        now(), now()),
+       (NEXTVAL('user_login_id_seq'), 'pperic', '$2a$12$w9yyRLSacCwFIulhIWPg5uWHoCINUH.vfkuAiO1FhSDAO9mv9orJu', 4,
         now(), now());
 
 INSERT INTO user_role (user_id, role_id)
