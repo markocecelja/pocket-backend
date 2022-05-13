@@ -11,6 +11,7 @@ import org.hibernate.annotations.Parameter;
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -42,5 +43,5 @@ public class Organization extends AbstractBaseEntity {
 	private OrganizationCode organizationCode;
 
 	@OneToMany(mappedBy = "organizationMemberPK.organization", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<OrganizationMember> members;
+	private Set<OrganizationMember> members = new HashSet<>();
 }

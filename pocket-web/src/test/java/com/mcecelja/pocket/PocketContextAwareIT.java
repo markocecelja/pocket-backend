@@ -65,12 +65,12 @@ public abstract class PocketContextAwareIT {
 		HttpEntity<LoginRequestDTO> entity = new HttpEntity<>(body, headers);
 
 		ResponseEntity<ResponseMessage> response = restTemplate.exchange(
-				createURLWithPort("/api/authentication/login"),
+				createURLWithPort("/api/public/authentication/login"),
 				HttpMethod.POST, entity, ResponseMessage.class);
 
 		LinkedHashMap loginResponse = (LinkedHashMap) response.getBody().getPayload();
 		headers.clear();
-		headers.add(jwtProperties.getHeader(),"Bearer " + (String) loginResponse.get("jwt"));
+		headers.add(jwtProperties.getHeader(),"Bearer " + loginResponse.get("jwt"));
 
 	}
 
