@@ -5,7 +5,7 @@ import com.mcecelja.pocket.common.exceptions.PocketError;
 import com.mcecelja.pocket.common.exceptions.PocketException;
 import com.mcecelja.pocket.common.mappers.codebook.CodeBookMapper;
 import com.mcecelja.pocket.context.AuthorizedRequestContext;
-import com.mcecelja.pocket.domain.offer.codebook.Category;
+import com.mcecelja.pocket.domain.post.codebook.Category;
 import com.mcecelja.pocket.domain.user.User;
 import com.mcecelja.pocket.domain.user.codebook.RoleEnum;
 import com.mcecelja.pocket.managers.codebook.CodeBookManager;

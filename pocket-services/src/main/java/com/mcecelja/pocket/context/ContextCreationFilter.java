@@ -29,7 +29,7 @@ public class ContextCreationFilter extends OncePerRequestFilter {
 		String authToken = jwtUtil.resolveToken(httpServletRequest);
 		if (authToken != null && !authToken.isEmpty()) {
 			Long userId = jwtUtil.getUserIdFromSessionToken(authToken);
-			Optional<User> userOptional = userRepository.findById(userId);
+			Optional<User> userOptional = userRepository.findUserById(userId);
 
 			if (!userOptional.isPresent()) {
 				log.warn("Failed creating context: no active user for id {}!", userId);

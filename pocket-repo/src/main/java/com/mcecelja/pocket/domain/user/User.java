@@ -1,6 +1,7 @@
 package com.mcecelja.pocket.domain.user;
 
 import com.mcecelja.pocket.domain.AbstractBaseEntity;
+import com.mcecelja.pocket.domain.organization.OrganizationMember;
 import com.mcecelja.pocket.domain.user.codebook.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,11 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
+@NamedEntityGraph(name = "user_graph",
+		attributeNodes = {
+				@NamedAttributeNode(value = "organizationMembers")
+		}
+)
 public class User extends AbstractBaseEntity implements Serializable {
 
 	@Id
@@ -52,4 +58,7 @@ public class User extends AbstractBaseEntity implements Serializable {
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private UserLogin userLogin;
+
+	@OneToMany(mappedBy = "organizationMemberPK.user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<OrganizationMember> organizationMembers;
 }

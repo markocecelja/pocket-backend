@@ -177,6 +177,26 @@ public class CategoryControllerIT extends PocketContextAwareIT {
 	}
 
 	@Test
+	public void updateCategoryNonExistingCategory() {
+
+		authenticateUser("ikovac", "ikovac");
+
+		EditableCodeBookEntryDTO editableCodeBookEntryDTO = EditableCodeBookEntryDTO.builder()
+				.name("Ažurirana")
+				.active(false)
+				.build();
+
+		HttpEntity<EditableCodeBookEntryDTO> entity = new HttpEntity<>(editableCodeBookEntryDTO, headers);
+
+		ResponseEntity<ResponseMessage> response = restTemplate.exchange(
+				createURLWithPort("/api/categories/0"),
+				HttpMethod.PUT, entity, ResponseMessage.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(PocketError.NON_EXISTING_CATEGORY.toString(), response.getBody().getErrorCode());
+	}
+
+	@Test
 	public void updateCategoryUnauthorized() {
 
 		authenticateUser("ffranjic", "ffranjic");

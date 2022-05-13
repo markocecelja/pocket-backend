@@ -19,4 +19,10 @@ public class PermissionCheckerServiceImpl implements PermissionCheckerService {
 		return organization.getMembers().stream().anyMatch(organizationMember -> organizationMember.getOrganizationMemberPK().getUser().getId().equals(user.getId()) &&
 				organizationMember.getOrganizationRole().getId().equals(organizationMemberRole.getId()));
 	}
+
+	@Override
+	public boolean isUserAllowedToCreatePostForOrganization(User user, Long organizationId) {
+		return checkUserHasRole(user, RoleEnum.SYSTEM_ADMIN) ||
+				user.getOrganizationMembers().stream().anyMatch(organizationMember -> organizationMember.getOrganizationMemberPK().getOrganization().getId().equals(organizationId));
+	}
 }

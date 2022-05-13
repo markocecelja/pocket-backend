@@ -4,7 +4,7 @@ import com.mcecelja.pocket.common.dto.codebook.EditableCodeBookEntryDTO;
 import com.mcecelja.pocket.common.exceptions.PocketError;
 import com.mcecelja.pocket.common.exceptions.PocketException;
 import com.mcecelja.pocket.domain.AbstractEditableCodeBookEntity;
-import com.mcecelja.pocket.domain.offer.codebook.Category;
+import com.mcecelja.pocket.domain.post.codebook.Category;
 import com.mcecelja.pocket.repositories.offer.codebook.CategoryRepository;
 import com.mcecelja.pocket.specification.EditableCodeBookSearchSpecification;
 import com.mcecelja.pocket.specification.criteria.EditableCodeBookSearchCriteria;

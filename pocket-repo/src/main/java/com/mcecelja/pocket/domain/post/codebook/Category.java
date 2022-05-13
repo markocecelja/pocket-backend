@@ -1,4 +1,4 @@
-package com.mcecelja.pocket.domain.offer.codebook;
+package com.mcecelja.pocket.domain.post.codebook;
 
 import com.mcecelja.pocket.domain.AbstractEditableCodeBookEntity;
 import lombok.NoArgsConstructor;

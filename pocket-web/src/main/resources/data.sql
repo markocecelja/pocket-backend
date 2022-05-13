@@ -46,5 +46,8 @@ INSERT INTO organization_member(organization_id, user_id, organization_role_id)
 VALUES (1, 2, 1),
        (1, 3, 2);
 
-INSERT INTO offer(id, title, description, category_id, organization_id, created_date_time, updated_date_time)
-VALUES (NEXTVAL('offer_id_seq'), 'Super ponuda', 'Iskoristite kod 489766dad5 za ostvaranje popusta na hranu!', 3, 1, now(), now());
+INSERT INTO post(id, active, title, description, category_id, organization_id, created_date_time, updated_date_time)
+VALUES (NEXTVAL('post_id_seq'), true, 'Testna objava', 'Iskoristite kod 489766dad5 za ostvaranje popusta na hranu!', 3, 1, now(), now()),
+       (NEXTVAL('post_id_seq'), true, 'Testna objava u drugoj kategoriji', 'Test', 3, 1, now(), now()),
+       (NEXTVAL('post_id_seq'), false, 'Neaktivna objava', 'Neaktivno!', 2, 1, now(), now()),
+       (NEXTVAL('post_id_seq'), false, 'Objava druge organizacije', 'Objava!', 4, 2, now(), now());

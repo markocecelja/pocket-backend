@@ -1,7 +1,7 @@
-package com.mcecelja.pocket.domain.offer;
+package com.mcecelja.pocket.domain.post;
 
 import com.mcecelja.pocket.domain.AbstractBaseEntity;
-import com.mcecelja.pocket.domain.offer.codebook.Category;
+import com.mcecelja.pocket.domain.post.codebook.Category;
 import com.mcecelja.pocket.domain.organization.Organization;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,15 +17,15 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Offer extends AbstractBaseEntity {
+public class Post extends AbstractBaseEntity {
 
 	@Id
-	@GeneratedValue(generator = "offer_sequence", strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(generator = "post_sequence", strategy = GenerationType.SEQUENCE)
 	@GenericGenerator(
-			name = "offer_sequence",
+			name = "post_sequence",
 			strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
 			parameters = {
-					@Parameter(name = "sequence_name", value = "offer_id_seq"),
+					@Parameter(name = "sequence_name", value = "post_id_seq"),
 			}
 	)
 	private Long id;
@@ -34,6 +34,8 @@ public class Offer extends AbstractBaseEntity {
 
 	@Column(columnDefinition = "TEXT")
 	private String description;
+
+	private boolean active;
 
 	@ManyToOne
 	private Category category;

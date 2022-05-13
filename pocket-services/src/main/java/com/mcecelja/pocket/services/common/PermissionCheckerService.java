@@ -10,4 +10,6 @@ public interface PermissionCheckerService {
 	boolean checkUserHasRole(User user, RoleEnum role);
 
 	boolean checkUserHasOrganizationRole(User user, Organization organization, OrganizationRoleEnum organizationMemberRole);
+
+	boolean isUserAllowedToCreatePostForOrganization(User user, Long organizationId);
 }
