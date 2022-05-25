@@ -20,7 +20,7 @@ import java.util.Optional;
 @Service
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class CategoryManagerImpl implements CodeBookManager {
+public class CategoryManagerImpl implements EditableCodeBookManager {
 
 	private final CategoryRepository categoryRepository;
 

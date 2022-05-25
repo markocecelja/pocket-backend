@@ -8,11 +8,12 @@ import com.mcecelja.pocket.domain.organization.Organization;
 import com.mcecelja.pocket.domain.post.Post;
 import com.mcecelja.pocket.domain.post.codebook.Category;
 import com.mcecelja.pocket.domain.user.User;
-import com.mcecelja.pocket.managers.codebook.CodeBookManager;
+import com.mcecelja.pocket.managers.codebook.EditableCodeBookManager;
 import com.mcecelja.pocket.managers.organization.OrganizationManager;
 import com.mcecelja.pocket.repositories.offer.PostRepository;
 import com.mcecelja.pocket.specification.PostSearchSpecification;
 import com.mcecelja.pocket.specification.criteria.EditableCodeBookSearchCriteria;
+import com.mcecelja.pocket.specification.criteria.OrganizationSearchCriteria;
 import com.mcecelja.pocket.specification.criteria.PostSearchCriteria;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class PostManagerImpl implements PostManager {
 	private final PostRepository postRepository;
 
 	@Qualifier("categoryManagerImpl")
-	private final CodeBookManager categoryManager;
+	private final EditableCodeBookManager categoryManager;
 
 	private final OrganizationManager organizationManager;
 
@@ -79,7 +80,8 @@ public class PostManagerImpl implements PostManager {
 		Category category = (Category) categoryManager.getCodeBookEntity(categorySearchCriteria);
 		post.setCategory(category);
 
-		Organization organization = organizationManager.getOrganization(Long.valueOf(postDTO.getOrganization().getId()));
+		OrganizationSearchCriteria organizationSearchCriteria = OrganizationSearchCriteria.builder().id(Long.valueOf(postDTO.getOrganization().getId())).build();
+		Organization organization = organizationManager.getOrganization(organizationSearchCriteria);
 		post.setOrganization(organization);
 
 		postRepository.save(post);

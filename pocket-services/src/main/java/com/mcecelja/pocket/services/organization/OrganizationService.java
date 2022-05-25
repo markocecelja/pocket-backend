@@ -2,12 +2,13 @@ package com.mcecelja.pocket.services.organization;
 
 import com.mcecelja.pocket.common.dto.organization.OrganizationDTO;
 import com.mcecelja.pocket.common.exceptions.PocketException;
+import com.mcecelja.pocket.specification.criteria.OrganizationSearchCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface OrganizationService {
 
-	Page<OrganizationDTO> getOrganizations(Pageable pageable);
+	Page<OrganizationDTO> getOrganizations(OrganizationSearchCriteria organizationSearchCriteria, Pageable pageable);
 
 	OrganizationDTO getOrganization(Long organizationId) throws PocketException;
 

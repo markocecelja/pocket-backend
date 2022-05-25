@@ -8,7 +8,7 @@ import com.mcecelja.pocket.context.AuthorizedRequestContext;
 import com.mcecelja.pocket.domain.post.codebook.Category;
 import com.mcecelja.pocket.domain.user.User;
 import com.mcecelja.pocket.domain.user.codebook.RoleEnum;
-import com.mcecelja.pocket.managers.codebook.CodeBookManager;
+import com.mcecelja.pocket.managers.codebook.EditableCodeBookManager;
 import com.mcecelja.pocket.services.common.PermissionCheckerService;
 import com.mcecelja.pocket.specification.criteria.EditableCodeBookSearchCriteria;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class CategoryServiceImpl implements CodeBookService {
 	private final PermissionCheckerService permissionCheckerService;
 
 	@Qualifier("categoryManagerImpl")
-	private final CodeBookManager codeBookManager;
+	private final EditableCodeBookManager categoryManager;
 
 	private final CodeBookMapper codeBookMapper;
 
@@ -40,7 +40,7 @@ public class CategoryServiceImpl implements CodeBookService {
 			criteria.setActive(true);
 		}
 
-		return codeBookManager.getCodeBookEntities(criteria, pageable).map(codeBookMapper::editableCodeBookEntryToEditableCodeBookEntryDTO);
+		return categoryManager.getCodeBookEntities(criteria, pageable).map(codeBookMapper::editableCodeBookEntryToEditableCodeBookEntryDTO);
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class CategoryServiceImpl implements CodeBookService {
 			criteria.setActive(true);
 		}
 
-		return codeBookMapper.editableCodeBookEntryToEditableCodeBookEntryDTO(codeBookManager.getCodeBookEntity(criteria));
+		return codeBookMapper.editableCodeBookEntryToEditableCodeBookEntryDTO(categoryManager.getCodeBookEntity(criteria));
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class CategoryServiceImpl implements CodeBookService {
 			throw new PocketException(PocketError.UNAUTHORIZED);
 		}
 
-		Category category = (Category) codeBookManager.createCodeBookEntity(editableCodeBookEntryDTO);
+		Category category = (Category) categoryManager.createCodeBookEntity(editableCodeBookEntryDTO);
 
 		return codeBookMapper.editableCodeBookEntryToEditableCodeBookEntryDTO(category);
 	}
@@ -83,9 +83,9 @@ public class CategoryServiceImpl implements CodeBookService {
 			throw new PocketException(PocketError.UNAUTHORIZED);
 		}
 
-		Category category = (Category) codeBookManager.getCodeBookEntity(EditableCodeBookSearchCriteria.builder().id(id).build());
+		Category category = (Category) categoryManager.getCodeBookEntity(EditableCodeBookSearchCriteria.builder().id(id).build());
 
-		codeBookManager.updateCodeBookEntity(category, editableCodeBookEntryDTO);
+		categoryManager.updateCodeBookEntity(category, editableCodeBookEntryDTO);
 
 		return codeBookMapper.editableCodeBookEntryToEditableCodeBookEntryDTO(category);
 	}

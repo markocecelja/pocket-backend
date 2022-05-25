@@ -1,6 +1,7 @@
 package com.mcecelja.pocket.rest;
 
 import com.mcecelja.pocket.PocketContextAwareIT;
+import com.mcecelja.pocket.common.dto.organization.OrganizationCodeDTO;
 import com.mcecelja.pocket.common.dto.organization.OrganizationDTO;
 import com.mcecelja.pocket.common.dto.organization.OrganizationMemberDTO;
 import com.mcecelja.pocket.common.exceptions.PocketError;
@@ -34,6 +35,23 @@ public class OrganizationControllerIT extends PocketContextAwareIT {
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals(2, result.size());
+	}
+
+	@Test
+	public void getOrganizationsFilters() throws PocketException {
+
+		authenticateUser("ikovac", "ikovac");
+
+		HttpEntity<String> entity = new HttpEntity<>(null, headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/api/organizations?memberId=2"),
+				HttpMethod.GET, entity, String.class);
+
+		List<OrganizationDTO> result = getListFromBody(response, OrganizationDTO.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(1, result.size());
 	}
 
 	@Test
@@ -96,7 +114,7 @@ public class OrganizationControllerIT extends PocketContextAwareIT {
 		assertEquals("Opis nove organizacije", result.getDescription());
 		assertTrue(result.isActive());
 		assertNotNull(result.getOrganizationCode());
-		assertEquals("2", result.getOrganizationCode().getId());
+		assertEquals("3", result.getOrganizationCode().getId());
 	}
 
 	@Test
@@ -211,5 +229,42 @@ public class OrganizationControllerIT extends PocketContextAwareIT {
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals(2, result.size());
+	}
+
+	@Test
+	@DirtiesContext
+	public void joinOrganization() throws PocketException {
+
+		authenticateUser("ffranjic", "ffranjic");
+
+		OrganizationCodeDTO organizationCodeDTO = OrganizationCodeDTO.builder().value("PL87rTosp7").build();
+
+		HttpEntity<OrganizationCodeDTO> entity = new HttpEntity<>(organizationCodeDTO, headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/api/organizations/join"),
+				HttpMethod.POST, entity, String.class);
+
+		OrganizationDTO result = getDTOObjectFromBody(response, OrganizationDTO.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals("2", result.getId());
+	}
+
+	@Test
+	public void joinOrganizationNonExistingOrganization() {
+
+		authenticateUser("ffranjic", "ffranjic");
+
+		OrganizationCodeDTO organizationCodeDTO = OrganizationCodeDTO.builder().value("xxxxxxxxx").build();
+
+		HttpEntity<OrganizationCodeDTO> entity = new HttpEntity<>(organizationCodeDTO, headers);
+
+		ResponseEntity<ResponseMessage> response = restTemplate.exchange(
+				createURLWithPort("/api/organizations/join"),
+				HttpMethod.POST, entity, ResponseMessage.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(PocketError.NON_EXISTING_ORGANIZATION.toString(), response.getBody().getErrorCode());
 	}
 }

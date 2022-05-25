@@ -1,10 +1,12 @@
 package com.mcecelja.pocket.rest;
 
+import com.mcecelja.pocket.common.dto.organization.OrganizationCodeDTO;
 import com.mcecelja.pocket.common.dto.organization.OrganizationDTO;
 import com.mcecelja.pocket.common.dto.organization.OrganizationMemberDTO;
 import com.mcecelja.pocket.common.exceptions.PocketException;
 import com.mcecelja.pocket.services.organization.OrganizationMemberService;
 import com.mcecelja.pocket.services.organization.OrganizationService;
+import com.mcecelja.pocket.specification.criteria.OrganizationSearchCriteria;
 import com.mcecelja.pocket.utils.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,14 @@ public class OrganizationController {
 	private final OrganizationMemberService organizationMemberService;
 
 	@GetMapping("")
-	public ResponseEntity<ResponseMessage<Page<OrganizationDTO>>> getOrganizations(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
-		return ResponseEntity.ok(new ResponseMessage<>(organizationService.getOrganizations(pageable)));
+	public ResponseEntity<ResponseMessage<Page<OrganizationDTO>>> getOrganizations(@RequestParam(required = false) Long memberId,
+	                                                                               @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+
+		OrganizationSearchCriteria organizationSearchCriteria = OrganizationSearchCriteria.builder()
+				.memberId(memberId)
+				.build();
+
+		return ResponseEntity.ok(new ResponseMessage<>(organizationService.getOrganizations(organizationSearchCriteria, pageable)));
 	}
 
 	@GetMapping("/{id}")
@@ -49,5 +57,10 @@ public class OrganizationController {
 	@GetMapping("/{id}/members")
 	public ResponseEntity<ResponseMessage<Page<OrganizationMemberDTO>>> getOrganizationMembers(@PathVariable("id") Long organizationId, @PageableDefault(size = 20, sort = "organizationMemberPK.user.id", direction = Sort.Direction.ASC) Pageable pageable) {
 		return ResponseEntity.ok(new ResponseMessage<>(organizationMemberService.getOrganizationMembers(organizationId, pageable)));
+	}
+
+	@PostMapping("/join")
+	public ResponseEntity<ResponseMessage<OrganizationDTO>> joinOrganization(@Valid @RequestBody OrganizationCodeDTO organizationCodeDTO) throws PocketException {
+		return ResponseEntity.ok(new ResponseMessage<>(organizationMemberService.joinOrganizationByCode(organizationCodeDTO)));
 	}
 }

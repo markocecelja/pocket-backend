@@ -40,7 +40,8 @@ VALUES (NEXTVAL('organization_id_seq'), 'Testna organizacija', 'Opis testne orga
        (NEXTVAL('organization_id_seq'), 'Neaktivna organizacija', 'Opis neaktivne organizacije', false, now(), now());
 
 INSERT INTO organization_code(id, value, expiration_date, organization_id, created_date_time, updated_date_time)
-VALUES (NEXTVAL('organization_code_id_seq'), 'A18rT56PO9', DATEADD(DD, 30, now()), 1, now(), now());
+VALUES (NEXTVAL('organization_code_id_seq'), 'A18rT56PO9', DATEADD(DD, 30, now()), 1, now(), now()),
+       (NEXTVAL('organization_code_id_seq'), 'PL87rTosp7', DATEADD(DD, 30, now()), 2, now(), now());
 
 INSERT INTO organization_member(organization_id, user_id, organization_role_id)
 VALUES (1, 2, 1),
@@ -48,6 +49,6 @@ VALUES (1, 2, 1),
 
 INSERT INTO post(id, active, title, description, category_id, organization_id, created_date_time, updated_date_time)
 VALUES (NEXTVAL('post_id_seq'), true, 'Testna objava', 'Iskoristite kod 489766dad5 za ostvaranje popusta na hranu!', 3, 1, now(), now()),
-       (NEXTVAL('post_id_seq'), true, 'Testna objava u drugoj kategoriji', 'Test', 3, 1, now(), now()),
+       (NEXTVAL('post_id_seq'), true, 'Testna objava u drugoj kategoriji', 'Test', 2, 1, now(), now()),
        (NEXTVAL('post_id_seq'), false, 'Neaktivna objava', 'Neaktivno!', 2, 1, now(), now()),
        (NEXTVAL('post_id_seq'), false, 'Objava druge organizacije', 'Objava!', 4, 2, now(), now());

@@ -65,7 +65,7 @@ public class PostControllerIT extends PocketContextAwareIT {
 		List<PostDTO> result = getListFromBody(response, PostDTO.class);
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		assertEquals(1, result.size());
+		assertEquals(2, result.size());
 
 		response = restTemplate.exchange(
 				createURLWithPort("/api/posts?organizationId=1"),

@@ -10,6 +10,8 @@ import com.mcecelja.pocket.domain.user.codebook.RoleEnum;
 import com.mcecelja.pocket.repositories.organization.OrganizationCodeRepository;
 import com.mcecelja.pocket.repositories.organization.OrganizationRepository;
 import com.mcecelja.pocket.services.common.PermissionCheckerService;
+import com.mcecelja.pocket.specification.OrganizationSearchSpecification;
+import com.mcecelja.pocket.specification.criteria.OrganizationSearchCriteria;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -33,17 +35,17 @@ public class OrganizationManagerImpl implements OrganizationManager {
 	private final PermissionCheckerService permissionCheckerService;
 
 	@Override
-	public Page<Organization> getOrganizations(Pageable pageable) {
-		return organizationRepository.findAll(pageable);
+	public Page<Organization> getOrganizations(OrganizationSearchCriteria organizationSearchCriteria, Pageable pageable) {
+		return organizationRepository.findAll(OrganizationSearchSpecification.findOrganizations(organizationSearchCriteria), pageable);
 	}
 
 	@Override
-	public Organization getOrganization(Long id) throws PocketException {
+	public Organization getOrganization(OrganizationSearchCriteria criteria) throws PocketException {
 
-		Optional<Organization> organizationOptional = organizationRepository.findById(id);
+		Optional<Organization> organizationOptional = organizationRepository.findOne(OrganizationSearchSpecification.findOrganizations(criteria));
 
 		if (!organizationOptional.isPresent()) {
-			log.warn("Organization {} doesn't exist!", id);
+			log.warn("Organization doesn't exist!");
 			throw new PocketException(PocketError.NON_EXISTING_ORGANIZATION);
 		}
 

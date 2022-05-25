@@ -11,6 +11,7 @@ import com.mcecelja.pocket.domain.user.User;
 import com.mcecelja.pocket.domain.user.codebook.RoleEnum;
 import com.mcecelja.pocket.managers.organization.OrganizationManager;
 import com.mcecelja.pocket.services.common.PermissionCheckerService;
+import com.mcecelja.pocket.specification.criteria.OrganizationSearchCriteria;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,15 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private final OrganizationMapper organizationMapper;
 
 	@Override
-	public Page<OrganizationDTO> getOrganizations(Pageable pageable) {
-		return organizationManager.getOrganizations(pageable).map(organizationMapper::organizationToOrganizationDTO);
+	public Page<OrganizationDTO> getOrganizations(OrganizationSearchCriteria organizationSearchCriteria, Pageable pageable) {
+		organizationSearchCriteria.setCurrentUser(AuthorizedRequestContext.getCurrentUser());
+		return organizationManager.getOrganizations(organizationSearchCriteria, pageable).map(organizationMapper::organizationToOrganizationDTO);
 	}
 
 	@Override
 	public OrganizationDTO getOrganization(Long organizationId) throws PocketException {
-		return organizationMapper.organizationToOrganizationDTO(organizationManager.getOrganization(organizationId));
+		OrganizationSearchCriteria organizationSearchCriteria = OrganizationSearchCriteria.builder().id(organizationId).build();
+		return organizationMapper.organizationToOrganizationDTO(organizationManager.getOrganization(organizationSearchCriteria));
 	}
 
 	@Override
@@ -60,7 +63,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 		User currentUser = AuthorizedRequestContext.getCurrentUser();
 
-		Organization organization = organizationManager.getOrganization(organizationId);
+		OrganizationSearchCriteria organizationSearchCriteria = OrganizationSearchCriteria.builder().id(organizationId).build();
+		Organization organization = organizationManager.getOrganization(organizationSearchCriteria);
 
 		if (!permissionCheckerService.checkUserHasRole(currentUser, RoleEnum.SYSTEM_ADMIN) && !permissionCheckerService.checkUserHasOrganizationRole(currentUser, organization, OrganizationRoleEnum.ADMIN)) {
 			log.warn("Create organization failed: user {} doesn't have permission to create organization!", currentUser.getId());
