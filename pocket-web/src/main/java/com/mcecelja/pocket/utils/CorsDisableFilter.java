@@ -21,11 +21,13 @@ public class CorsDisableFilter extends OncePerRequestFilter {
 
 		final String origin = "*";
 
-		response.addHeader("Access-Control-Allow-Origin", origin);
-		response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
-		response.setHeader("Access-Control-Allow-Credentials", "true");
-		response.setHeader("Access-Control-Allow-Headers",
-				"content-type, x-gwt-module-base, x-gwt-permutation, clientid, longpush, Authorization");
+		if(request.getServletPath().contains("/api")) {
+			response.addHeader("Access-Control-Allow-Origin", origin);
+			response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+			response.setHeader("Access-Control-Allow-Credentials", "true");
+			response.setHeader("Access-Control-Allow-Headers",
+					"content-type, x-gwt-module-base, x-gwt-permutation, clientid, longpush, Authorization");
+		}
 
 		filterChain.doFilter(request, response);
 

@@ -1,10 +1,8 @@
 package com.mcecelja.pocket.rest;
 
-import com.mcecelja.pocket.common.dto.codebook.EditableCodeBookEntryDTO;
 import com.mcecelja.pocket.common.dto.post.PostDTO;
 import com.mcecelja.pocket.common.exceptions.PocketException;
 import com.mcecelja.pocket.services.post.PostService;
-import com.mcecelja.pocket.specification.criteria.EditableCodeBookSearchCriteria;
 import com.mcecelja.pocket.specification.criteria.PostSearchCriteria;
 import com.mcecelja.pocket.utils.ResponseMessage;
 import lombok.RequiredArgsConstructor;

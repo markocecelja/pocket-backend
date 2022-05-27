@@ -18,7 +18,8 @@ INSERT INTO users (id, first_name, last_name, created_date_time, updated_date_ti
 VALUES (NEXTVAL('users_id_seq'), 'Ivan', 'Kovač', now(), now()),
        (NEXTVAL('users_id_seq'), 'Filip', 'Franjić', now(), now()),
        (NEXTVAL('users_id_seq'), 'Ana', 'Đukić', now(), now()),
-       (NEXTVAL('users_id_seq'), 'Pero', 'Perić', now(), now());
+       (NEXTVAL('users_id_seq'), 'Pero', 'Perić', now(), now()),
+       (NEXTVAL('users_id_seq'), 'Ivan', 'Radić', now(), now());
 
 INSERT INTO user_login (id, username, password, user_id, created_date_time, updated_date_time)
 VALUES (NEXTVAL('user_login_id_seq'), 'ikovac', '$2a$12$JB8fZ4Kojd6/H2U.SS9mq.1fjg3i3dgmmURGCH0Huw0LnO06P/fb2', 1,
@@ -28,12 +29,16 @@ VALUES (NEXTVAL('user_login_id_seq'), 'ikovac', '$2a$12$JB8fZ4Kojd6/H2U.SS9mq.1f
        (NEXTVAL('user_login_id_seq'), 'adukic', '$2a$12$ZBQ3CxyZ8H9i9DVpeHTKBuBb7hZEHTkYOnpnZ0UZdaEUcWDlDeb.e', 3,
         now(), now()),
        (NEXTVAL('user_login_id_seq'), 'pperic', '$2a$12$w9yyRLSacCwFIulhIWPg5uWHoCINUH.vfkuAiO1FhSDAO9mv9orJu', 4,
+        now(), now()),
+       (NEXTVAL('user_login_id_seq'), 'iradic', '$2a$12$8ZQwQpqNrdVR1oZXAufp0OCYhDbY9jRGyOsDpLbB0/MWvpzs14/j.', 5,
         now(), now());
 
 INSERT INTO user_role (user_id, role_id)
 VALUES (1, 1),
        (2, 2),
-       (3, 2);
+       (3, 2),
+       (4, 2),
+       (5, 3);
 
 INSERT INTO organization(id, name, description, active, created_date_time, updated_date_time)
 VALUES (NEXTVAL('organization_id_seq'), 'Testna organizacija', 'Opis testne organizacije', true, now(), now()),
@@ -52,3 +57,11 @@ VALUES (NEXTVAL('post_id_seq'), true, 'Testna objava', 'Iskoristite kod 489766da
        (NEXTVAL('post_id_seq'), true, 'Testna objava u drugoj kategoriji', 'Test', 2, 1, now(), now()),
        (NEXTVAL('post_id_seq'), false, 'Neaktivna objava', 'Neaktivno!', 2, 1, now(), now()),
        (NEXTVAL('post_id_seq'), false, 'Objava druge organizacije', 'Objava!', 4, 2, now(), now());
+
+INSERT INTO chat(id, user_id, post_id, created_date_time, updated_date_time)
+VALUES (NEXTVAL('chat_id_seq'), 5, 1, now(), now()),
+       (NEXTVAL('chat_id_seq'), 5, 4, now(), now());
+
+INSERT INTO message(id, created_by_id, chat_id, text, created_date_time, updated_date_time)
+VALUES (NEXTVAL('message_id_seq'), 5, 1, 'Može pitanje?', '2022-05-26 12:40:28.831', '2022-05-26 12:40:28.831'),
+       (NEXTVAL('message_id_seq'), 2, 1, 'Recite', '2022-05-26 12:45:28.831', '2022-05-26 12:45:28.831');

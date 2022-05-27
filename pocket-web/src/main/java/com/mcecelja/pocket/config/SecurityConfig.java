@@ -26,7 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final String[] publicEndpoints = {
 			"/h2-console/**",
-			"/api/public/**"
+			"/api/public/**",
+			"/chat/**"
 	};
 
 	@Resource(name = "userService")
@@ -77,6 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers(publicEndpoints).permitAll()
 				.antMatchers(HttpMethod.OPTIONS,"/api/**").permitAll()
+				.antMatchers(HttpMethod.GET,"/chat/**").permitAll()
 				.anyRequest()
 				.authenticated()
 				.and()
