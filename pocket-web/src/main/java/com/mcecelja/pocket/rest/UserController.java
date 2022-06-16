@@ -19,6 +19,8 @@ public class UserController {
 
 	@GetMapping("/current")
 	public ResponseEntity<ResponseMessage<UserDTO>> getCurrentUserInfo() {
-		return ResponseEntity.ok(new ResponseMessage<>(userService.getCurrentUserInfo()));
+		return ResponseEntity.ok(new ResponseMessage<>(
+				userService.getCurrentUserInfo())
+		);
 	}
 }

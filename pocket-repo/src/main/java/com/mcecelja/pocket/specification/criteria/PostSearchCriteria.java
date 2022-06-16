@@ -16,5 +16,7 @@ public class PostSearchCriteria {
 
 	private Long categoryId;
 
+	private String title;
+
 	private User currentUser;
 }

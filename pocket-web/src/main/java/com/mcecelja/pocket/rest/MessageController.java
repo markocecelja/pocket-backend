@@ -27,11 +27,11 @@ public class MessageController {
 	private final SimpMessagingTemplate template;
 
 	@GetMapping("")
-	public ResponseEntity<ResponseMessage<Page<MessageDTO>>> getMessages(@RequestParam Long chatId,
+	public ResponseEntity<ResponseMessage<Page<MessageDTO>>> getMessages(@RequestParam Long postId,
 	                                                                     @PageableDefault(size = 20, sort = "createdDateTime", direction = Sort.Direction.DESC) Pageable pageable) {
 
 		MessageSearchCriteria messageSearchCriteria = MessageSearchCriteria.builder()
-				.chatId(chatId)
+				.postId(postId)
 				.build();
 
 		return ResponseEntity.ok(new ResponseMessage<>(messageService.getMessages(messageSearchCriteria, pageable)));

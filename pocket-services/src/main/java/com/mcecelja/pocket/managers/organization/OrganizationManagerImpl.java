@@ -42,6 +42,8 @@ public class OrganizationManagerImpl implements OrganizationManager {
 	@Override
 	public Organization getOrganization(OrganizationSearchCriteria criteria) throws PocketException {
 
+		criteria.setCurrentUser(AuthorizedRequestContext.getCurrentUser());
+
 		Optional<Organization> organizationOptional = organizationRepository.findOne(OrganizationSearchSpecification.findOrganizations(criteria));
 
 		if (!organizationOptional.isPresent()) {
@@ -81,6 +83,11 @@ public class OrganizationManagerImpl implements OrganizationManager {
 		organization.setDescription(organizationDTO.getDescription());
 
 		if (permissionCheckerService.checkUserHasRole(AuthorizedRequestContext.getCurrentUser(), RoleEnum.SYSTEM_ADMIN)) {
+
+			if(!organizationDTO.isActive()) {
+				organization.getPosts().forEach(post -> post.setActive(false));
+			}
+
 			organization.setActive(organizationDTO.isActive());
 		}
 

@@ -24,6 +24,7 @@ public class OrganizationSearchSpecification {
 			Long id = criteria.getId();
 			String code = criteria.getCode();
 			Long memberId = criteria.getMemberId();
+			String name = criteria.getName();
 
 			if (id != null) {
 				restrictions.add(
@@ -50,6 +51,12 @@ public class OrganizationSearchSpecification {
 
 				restrictions.add(
 						criteriaBuilder.equal(organizationOrganizationMemberJoin.get("organizationMemberPK").get("user").get("id"), memberId)
+				);
+			}
+
+			if (name != null && !name.trim().isEmpty()) {
+				restrictions.add(
+						criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + name.toLowerCase() + "%")
 				);
 			}
 

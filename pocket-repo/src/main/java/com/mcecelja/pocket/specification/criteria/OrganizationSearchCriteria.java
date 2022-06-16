@@ -17,4 +17,6 @@ public class OrganizationSearchCriteria {
 	private Long memberId;
 
 	private User currentUser;
+
+	private String name;
 }

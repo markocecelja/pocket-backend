@@ -8,4 +8,6 @@ public interface UserLoginRepository extends JpaRepository<UserLogin, Long> {
 	UserLogin findUserLoginByUserId(Long userId);
 
 	UserLogin findUserLoginByUsernameIgnoreCase(String username);
+
+	boolean existsByUsernameIgnoreCase(String username);
 }

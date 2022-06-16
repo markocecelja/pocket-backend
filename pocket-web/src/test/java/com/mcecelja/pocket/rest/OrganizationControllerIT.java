@@ -235,9 +235,9 @@ public class OrganizationControllerIT extends PocketContextAwareIT {
 	@DirtiesContext
 	public void joinOrganization() throws PocketException {
 
-		authenticateUser("ffranjic", "ffranjic");
+		authenticateUser("pperic", "pperic");
 
-		OrganizationCodeDTO organizationCodeDTO = OrganizationCodeDTO.builder().value("PL87rTosp7").build();
+		OrganizationCodeDTO organizationCodeDTO = OrganizationCodeDTO.builder().value("A18rT56PO9").build();
 
 		HttpEntity<OrganizationCodeDTO> entity = new HttpEntity<>(organizationCodeDTO, headers);
 
@@ -248,7 +248,7 @@ public class OrganizationControllerIT extends PocketContextAwareIT {
 		OrganizationDTO result = getDTOObjectFromBody(response, OrganizationDTO.class);
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		assertEquals("2", result.getId());
+		assertEquals("1", result.getId());
 	}
 
 	@Test

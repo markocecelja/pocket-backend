@@ -2,6 +2,7 @@ package com.mcecelja.pocket.rest;
 
 import com.mcecelja.pocket.common.dto.authentication.LoginRequestDTO;
 import com.mcecelja.pocket.common.dto.authentication.LoginResponseDTO;
+import com.mcecelja.pocket.common.dto.authentication.RegistrationRequestDTO;
 import com.mcecelja.pocket.common.exceptions.PocketException;
 import com.mcecelja.pocket.services.AuthenticationService;
 import com.mcecelja.pocket.utils.ResponseMessage;
@@ -24,5 +25,11 @@ public class AuthenticationController {
 
 		LoginResponseDTO loginResponseDTO = authenticationService.authenticateUser(loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
 		return ResponseEntity.ok(new ResponseMessage<>(loginResponseDTO));
+	}
+
+	@PostMapping("/registration")
+	public ResponseEntity<ResponseMessage<String>> registerUser(@Valid @RequestBody RegistrationRequestDTO registrationRequestDTO) throws PocketException {
+		authenticationService.registerUser(registrationRequestDTO);
+		return ResponseEntity.ok(new ResponseMessage<>(""));
 	}
 }

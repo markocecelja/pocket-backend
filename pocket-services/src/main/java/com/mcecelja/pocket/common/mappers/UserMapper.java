@@ -8,7 +8,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CodeBookMapper.class})
+@Mapper(componentModel = "spring",
+		unmappedTargetPolicy = ReportingPolicy.IGNORE,
+		uses = {CodeBookMapper.class})
 public abstract class UserMapper {
 
 	@Mappings({

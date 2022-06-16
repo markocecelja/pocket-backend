@@ -25,6 +25,7 @@ public class PostSearchSpecification {
 			Long organizationId = criteria.getOrganizationId();
 			Long categoryId = criteria.getCategoryId();
 			User currentUser = criteria.getCurrentUser();
+			String title = criteria.getTitle();
 
 			if (id != null) {
 				restrictions.add(
@@ -55,6 +56,12 @@ public class PostSearchSpecification {
 
 				restrictions.add(
 						criteriaBuilder.equal(organizationOrganizationMemberJoin.get("organizationMemberPK").get("user").get("id"), currentUser.getId())
+				);
+			}
+
+			if (title != null && !title.trim().isEmpty()) {
+				restrictions.add(
+						criteriaBuilder.like(criteriaBuilder.lower(root.get("title")), "%" + title.toLowerCase() + "%")
 				);
 			}
 

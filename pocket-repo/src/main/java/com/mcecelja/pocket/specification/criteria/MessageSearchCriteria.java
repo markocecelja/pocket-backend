@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 public class MessageSearchCriteria {
 
-	private Long chatId;
+	private Long postId;
 
 	private User currentUser;
 }

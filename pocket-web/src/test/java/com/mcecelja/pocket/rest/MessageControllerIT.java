@@ -25,7 +25,7 @@ public class MessageControllerIT extends PocketContextAwareIT {
 		HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(
-				createURLWithPort("/api/messages?chatId=1"),
+				createURLWithPort("/api/messages?postId=1"),
 				HttpMethod.GET, entity, String.class);
 
 		List<MessageDTO> result = getListFromBody(response, MessageDTO.class);

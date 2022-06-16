@@ -30,10 +30,12 @@ public class OrganizationController {
 
 	@GetMapping("")
 	public ResponseEntity<ResponseMessage<Page<OrganizationDTO>>> getOrganizations(@RequestParam(required = false) Long memberId,
+	                                                                               @RequestParam(required = false) String name,
 	                                                                               @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
 
 		OrganizationSearchCriteria organizationSearchCriteria = OrganizationSearchCriteria.builder()
 				.memberId(memberId)
+				.name(name)
 				.build();
 
 		return ResponseEntity.ok(new ResponseMessage<>(organizationService.getOrganizations(organizationSearchCriteria, pageable)));

@@ -11,7 +11,9 @@ public enum PocketError {
 	NON_EXISTING_CATEGORY("Category with provided id doesn't exist!"),
 	NON_EXISTING_POST("Post with provided id doesn't exist!"),
 	NON_EXISTING_ORGANIZATION_ROLE("Organization role with provided id doesn't exist!"),
-	NON_EXISTING_CHAT("Chat with provided id doesn't exist!");
+	NON_EXISTING_CHAT("Chat with provided id doesn't exist!"),
+	PASSWORD_MISMATCH("Password mismatch!"),
+	USERNAME_ALREADY_IN_USE("Provided username is already in use!");
 
 	private final String desc;
 

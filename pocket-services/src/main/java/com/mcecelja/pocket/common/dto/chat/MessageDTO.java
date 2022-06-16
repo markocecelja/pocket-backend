@@ -19,9 +19,7 @@ public class MessageDTO {
 	@NotBlank
 	private String text;
 
-	private String creator;
-
-	private boolean createdByCurrentUser;
+	private MessageCreatorDTO createdBy;
 
 	@NotNull
 	private ChatDTO chat;

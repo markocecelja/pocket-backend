@@ -26,11 +26,13 @@ public class PostController {
 	@GetMapping("")
 	public ResponseEntity<ResponseMessage<Page<PostDTO>>> getPosts(@RequestParam(required = false) Long organizationId,
 	                                                               @RequestParam(required = false) Long categoryId,
+	                                                               @RequestParam(required = false) String title,
 	                                                               @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
 
 		PostSearchCriteria postSearchCriteria = PostSearchCriteria.builder()
 				.organizationId(organizationId)
 				.categoryId(categoryId)
+				.title(title)
 				.build();
 
 		return ResponseEntity.ok(new ResponseMessage<>(postService.getPosts(postSearchCriteria, pageable)));

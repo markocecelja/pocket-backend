@@ -37,19 +37,27 @@ public class MessageManagerImpl implements MessageManager {
 
 		User currentUser = AuthorizedRequestContext.getCurrentUser();
 
+		Long postId = messageDTO.getChat() != null && messageDTO.getChat().getPost() != null ? Long.valueOf(messageDTO.getChat().getPost().getId()) : null;
+
 		ChatSearchCriteria criteria = ChatSearchCriteria.builder()
-				.id(Long.valueOf(messageDTO.getChat().getId()))
+				.postId(postId)
 				.currentUser(currentUser)
 				.build();
 
-		Chat chat = chatManager.getChat(criteria);
+		Chat chat;
+
+		try {
+			chat = chatManager.getChat(criteria);
+		} catch (PocketException pocketException) {
+			chat = chatManager.createChat(postId, currentUser);
+		}
 
 		Message message = new Message();
 		message.setText(messageDTO.getText());
 		message.setCreatedBy(currentUser);
 		message.setChat(chat);
 
-		messageRepository.save(message);
+		messageRepository.saveAndFlush(message);
 
 		return message;
 	}

@@ -1,6 +1,7 @@
 package com.mcecelja.pocket.domain.organization;
 
 import com.mcecelja.pocket.domain.AbstractBaseEntity;
+import com.mcecelja.pocket.domain.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,4 +45,7 @@ public class Organization extends AbstractBaseEntity {
 
 	@OneToMany(mappedBy = "organizationMemberPK.organization", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<OrganizationMember> members = new HashSet<>();
+
+	@OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Post> posts;
 }
