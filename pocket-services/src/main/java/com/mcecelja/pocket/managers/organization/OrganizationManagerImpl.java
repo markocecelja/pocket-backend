@@ -6,7 +6,9 @@ import com.mcecelja.pocket.common.exceptions.PocketException;
 import com.mcecelja.pocket.context.AuthorizedRequestContext;
 import com.mcecelja.pocket.domain.organization.Organization;
 import com.mcecelja.pocket.domain.organization.OrganizationCode;
+import com.mcecelja.pocket.domain.organization.codebook.OrganizationRoleEnum;
 import com.mcecelja.pocket.domain.user.codebook.RoleEnum;
+import com.mcecelja.pocket.managers.organization.member.OrganizationMemberManager;
 import com.mcecelja.pocket.repositories.organization.OrganizationCodeRepository;
 import com.mcecelja.pocket.repositories.organization.OrganizationRepository;
 import com.mcecelja.pocket.services.common.PermissionCheckerService;
@@ -34,6 +36,8 @@ public class OrganizationManagerImpl implements OrganizationManager {
 
 	private final PermissionCheckerService permissionCheckerService;
 
+	private final OrganizationMemberManager organizationMemberManager;
+
 	@Override
 	public Page<Organization> getOrganizations(OrganizationSearchCriteria organizationSearchCriteria, Pageable pageable) {
 		return organizationRepository.findAll(OrganizationSearchSpecification.findOrganizations(organizationSearchCriteria), pageable);
@@ -55,12 +59,13 @@ public class OrganizationManagerImpl implements OrganizationManager {
 	}
 
 	@Override
-	public Organization createOrganization(OrganizationDTO organizationDTO) {
+	public Organization createOrganization(OrganizationDTO organizationDTO) throws PocketException {
 
 		Organization organization = new Organization();
 		organization.setName(organizationDTO.getName());
 		organization.setDescription(organizationDTO.getDescription());
 		organization.setActive(true);
+		organization.setVerified(false);
 
 		String code;
 
@@ -72,6 +77,8 @@ public class OrganizationManagerImpl implements OrganizationManager {
 		organization.setOrganizationCode(organizationCode);
 
 		organizationRepository.save(organization);
+
+		organizationMemberManager.addMemberToOrganization(organization, AuthorizedRequestContext.getCurrentUser(), OrganizationRoleEnum.ADMIN);
 
 		return organization;
 	}
@@ -89,6 +96,7 @@ public class OrganizationManagerImpl implements OrganizationManager {
 			}
 
 			organization.setActive(organizationDTO.isActive());
+			organization.setVerified(organizationDTO.isVerified());
 		}
 
 		organizationRepository.save(organization);

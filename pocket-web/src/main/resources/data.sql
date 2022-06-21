@@ -40,9 +40,9 @@ VALUES (1, 1),
        (4, 2),
        (5, 3);
 
-INSERT INTO organization(id, name, description, active, created_date_time, updated_date_time)
-VALUES (NEXTVAL('organization_id_seq'), 'Testna organizacija', 'Opis testne organizacije', true, now(), now()),
-       (NEXTVAL('organization_id_seq'), 'Neaktivna organizacija', 'Opis neaktivne organizacije', false, now(), now());
+INSERT INTO organization(id, name, description, active, verified, created_date_time, updated_date_time)
+VALUES (NEXTVAL('organization_id_seq'), 'Testna organizacija', 'Opis testne organizacije', true, true, now(), now()),
+       (NEXTVAL('organization_id_seq'), 'Neaktivna organizacija', 'Opis neaktivne organizacije', false, true, now(), now());
 
 INSERT INTO organization_code(id, value, expiration_date, organization_id, created_date_time, updated_date_time)
 VALUES (NEXTVAL('organization_code_id_seq'), 'A18rT56PO9', DATEADD(DD, 30, now()), 1, now(), now()),
@@ -63,5 +63,5 @@ VALUES (NEXTVAL('chat_id_seq'), 5, 1, now(), now()),
        (NEXTVAL('chat_id_seq'), 5, 4, now(), now());
 
 INSERT INTO message(id, created_by_id, chat_id, text, created_date_time, updated_date_time)
-VALUES (NEXTVAL('message_id_seq'), 5, 1, 'Može pitanje?', '2022-05-26 12:40:28.831', '2022-05-26 12:40:28.831'),
-       (NEXTVAL('message_id_seq'), 2, 1, 'Recite', '2022-05-26 12:45:28.831', '2022-05-26 12:45:28.831');
+VALUES (NEXTVAL('message_id_seq'), 5, 1, 'Pozdrav, zanima me do kada vrijedi ova ponuda?', '2022-05-26 12:40:28.831', '2022-05-26 12:40:28.831'),
+       (NEXTVAL('message_id_seq'), 2, 1, 'Pozdrav, ponudu možete iskoristiti do kraja ovog mjeseca.', '2022-05-26 12:45:28.831', '2022-05-26 12:45:28.831');

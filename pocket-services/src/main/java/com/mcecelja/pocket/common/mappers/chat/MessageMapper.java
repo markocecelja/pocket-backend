@@ -29,9 +29,17 @@ public abstract class MessageMapper {
 	protected MessageCreatorDTO mapCreatedBy(Message message) {
 
 		if (permissionCheckerService.checkUserHasRole(message.getCreatedBy(), RoleEnum.ORGANIZATION_MEMBER)) {
-			return MessageCreatorDTO.builder().id(message.getCreatedBy().getId().toString()).name(message.getChat().getPost().getOrganization().getName()).build();
+			return MessageCreatorDTO.builder()
+					.id(message.getCreatedBy().getId().toString())
+					.name(message.getChat().getPost().getOrganization().getName())
+					.type("ORGANIZATION")
+					.build();
 		} else {
-			return MessageCreatorDTO.builder().id(message.getCreatedBy().getId().toString()).name(String.format("%s %s", message.getCreatedBy().getFirstName(), message.getCreatedBy().getLastName())).build();
+			return MessageCreatorDTO.builder()
+					.id(message.getCreatedBy().getId().toString())
+					.name(String.format("%s %s", message.getCreatedBy().getFirstName(), message.getCreatedBy().getLastName()))
+					.type("USER")
+					.build();
 		}
 	}
 }

@@ -25,6 +25,7 @@ public class OrganizationSearchSpecification {
 			String code = criteria.getCode();
 			Long memberId = criteria.getMemberId();
 			String name = criteria.getName();
+			Boolean verified = criteria.getVerified();
 
 			if (id != null) {
 				restrictions.add(
@@ -57,6 +58,12 @@ public class OrganizationSearchSpecification {
 			if (name != null && !name.trim().isEmpty()) {
 				restrictions.add(
 						criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + name.toLowerCase() + "%")
+				);
+			}
+
+			if(verified != null) {
+				restrictions.add(
+						criteriaBuilder.equal(root.get("verified"), verified)
 				);
 			}
 

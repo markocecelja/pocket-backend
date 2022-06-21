@@ -13,7 +13,7 @@ public interface OrganizationManager {
 
 	Organization getOrganization(OrganizationSearchCriteria criteria) throws PocketException;
 
-	Organization createOrganization(OrganizationDTO organizationDTO);
+	Organization createOrganization(OrganizationDTO organizationDTO) throws PocketException;
 
 	void updateOrganization(Organization organization, OrganizationDTO organizationDTO);
 }

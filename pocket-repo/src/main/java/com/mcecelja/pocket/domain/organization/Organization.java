@@ -40,6 +40,8 @@ public class Organization extends AbstractBaseEntity {
 
 	private boolean active;
 
+	private boolean verified;
+
 	@OneToOne(mappedBy = "organization", cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private OrganizationCode organizationCode;
 

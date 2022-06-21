@@ -19,4 +19,6 @@ public class OrganizationSearchCriteria {
 	private User currentUser;
 
 	private String name;
+
+	private Boolean verified;
 }

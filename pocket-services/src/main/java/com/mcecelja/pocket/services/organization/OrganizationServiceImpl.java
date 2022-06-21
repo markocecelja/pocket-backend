@@ -49,7 +49,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 		User currentUser = AuthorizedRequestContext.getCurrentUser();
 
-		if (!permissionCheckerService.checkUserHasRole(currentUser, RoleEnum.SYSTEM_ADMIN)) {
+		if (permissionCheckerService.checkUserHasRole(currentUser, RoleEnum.STUDENT)) {
 			log.warn("Create organization failed: user {} doesn't have permission to create organization!", currentUser.getId());
 			throw new PocketException(PocketError.UNAUTHORIZED);
 		}

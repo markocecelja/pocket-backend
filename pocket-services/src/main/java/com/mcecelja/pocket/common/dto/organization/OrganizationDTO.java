@@ -21,6 +21,8 @@ public class OrganizationDTO {
 
 	private boolean active;
 
+	private boolean verified;
+
 	private OrganizationCodeDTO organizationCode;
 
 	private OrganizationMemberDTO currentUserMember;
