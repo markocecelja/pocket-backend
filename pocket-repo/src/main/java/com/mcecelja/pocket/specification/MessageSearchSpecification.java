@@ -24,11 +24,18 @@ public class MessageSearchSpecification {
 			List<Predicate> restrictions = new ArrayList<>();
 
 			Long postId = criteria.getPostId();
+			Long userId = criteria.getUserId();
 			User currentUser = criteria.getCurrentUser();
 
 			if (postId != null) {
 				restrictions.add(
 						criteriaBuilder.equal(root.get("chat").get("post").get("id"), postId)
+				);
+			}
+
+			if (userId != null) {
+				restrictions.add(
+						criteriaBuilder.equal(root.get("chat").get("user").get("id"), userId)
 				);
 			}
 

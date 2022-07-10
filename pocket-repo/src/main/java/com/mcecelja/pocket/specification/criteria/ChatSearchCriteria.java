@@ -14,5 +14,7 @@ public class ChatSearchCriteria {
 
 	private Long postId;
 
+	private Long userId;
+
 	private User currentUser;
 }

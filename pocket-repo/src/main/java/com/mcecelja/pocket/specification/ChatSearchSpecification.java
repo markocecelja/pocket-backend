@@ -24,6 +24,7 @@ public class ChatSearchSpecification {
 
 			Long id = criteria.getId();
 			Long postId = criteria.getPostId();
+			Long userId = criteria.getUserId();
 			User currentUser = criteria.getCurrentUser();
 
 			if(id != null) {
@@ -35,6 +36,12 @@ public class ChatSearchSpecification {
 			if (postId != null) {
 				restrictions.add(
 						criteriaBuilder.equal(root.get("post").get("id"), postId)
+				);
+			}
+
+			if (userId != null) {
+				restrictions.add(
+						criteriaBuilder.equal(root.get("user").get("id"), userId)
 				);
 			}
 

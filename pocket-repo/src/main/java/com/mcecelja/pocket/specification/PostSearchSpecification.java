@@ -53,6 +53,10 @@ public class PostSearchSpecification {
 				restrictions.add(
 						criteriaBuilder.equal(root.get("organization").get("verified"), criteriaBuilder.literal(true))
 				);
+
+				restrictions.add(
+						criteriaBuilder.equal(root.get("category").get("active"), criteriaBuilder.literal(true))
+				);
 			} else if (currentUser.getRoles().stream().anyMatch(role -> role.getId().equals(RoleEnum.ORGANIZATION_MEMBER.getId()))) {
 
 				Join<Post, Organization> postOrganizationJoin = root.join("organization", JoinType.LEFT);

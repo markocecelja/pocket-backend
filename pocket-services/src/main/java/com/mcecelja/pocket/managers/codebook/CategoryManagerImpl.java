@@ -72,6 +72,10 @@ public class CategoryManagerImpl implements EditableCodeBookManager {
 		category.setName(editableCodeBookEntryDTO.getName());
 		category.setActive(editableCodeBookEntryDTO.isActive());
 
+		if(!category.isActive()) {
+			category.getPosts().forEach(post -> post.setActive(false));
+		}
+
 		categoryRepository.save(category);
 	}
 }

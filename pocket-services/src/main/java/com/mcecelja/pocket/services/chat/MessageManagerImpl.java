@@ -38,10 +38,12 @@ public class MessageManagerImpl implements MessageManager {
 		User currentUser = AuthorizedRequestContext.getCurrentUser();
 
 		Long postId = messageDTO.getChat() != null && messageDTO.getChat().getPost() != null ? Long.valueOf(messageDTO.getChat().getPost().getId()) : null;
+		Long userId = messageDTO.getChat() != null && messageDTO.getChat().getUser() != null ? Long.valueOf(messageDTO.getChat().getUser().getId()) : null;
 
 		ChatSearchCriteria criteria = ChatSearchCriteria.builder()
 				.postId(postId)
 				.currentUser(currentUser)
+				.userId(userId)
 				.build();
 
 		Chat chat;

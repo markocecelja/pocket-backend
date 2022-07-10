@@ -120,7 +120,7 @@ public class OrganizationControllerIT extends PocketContextAwareIT {
 	@Test
 	public void createOrganizationUnauthorized() {
 
-		authenticateUser("adukic", "adukic");
+		authenticateUser("iradic", "iradic");
 
 		OrganizationDTO organizationDTO = OrganizationDTO.builder().name("Nova organizacija").description("Opis nove organizacije").build();
 

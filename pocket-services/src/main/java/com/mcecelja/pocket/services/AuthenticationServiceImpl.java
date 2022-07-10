@@ -5,19 +5,16 @@ import com.mcecelja.pocket.common.dto.authentication.RegistrationRequestDTO;
 import com.mcecelja.pocket.common.exceptions.PocketError;
 import com.mcecelja.pocket.common.exceptions.PocketException;
 import com.mcecelja.pocket.domain.user.User;
-import com.mcecelja.pocket.domain.user.UserLogin;
 import com.mcecelja.pocket.managers.user.UserManager;
 import com.mcecelja.pocket.repositories.user.UserLoginRepository;
 import com.mcecelja.pocket.security.UserPrincipal;
 import com.mcecelja.pocket.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service

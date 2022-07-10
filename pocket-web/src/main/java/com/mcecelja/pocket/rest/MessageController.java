@@ -28,10 +28,12 @@ public class MessageController {
 
 	@GetMapping("")
 	public ResponseEntity<ResponseMessage<Page<MessageDTO>>> getMessages(@RequestParam Long postId,
+	                                                                     @RequestParam Long userId,
 	                                                                     @PageableDefault(size = 20, sort = "createdDateTime", direction = Sort.Direction.DESC) Pageable pageable) {
 
 		MessageSearchCriteria messageSearchCriteria = MessageSearchCriteria.builder()
 				.postId(postId)
+				.userId(userId)
 				.build();
 
 		return ResponseEntity.ok(new ResponseMessage<>(messageService.getMessages(messageSearchCriteria, pageable)));
